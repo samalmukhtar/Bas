@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مثلث باسكال العجيب - النسخة المتطورة</title>
+    <title>مثلث باسكال العجيب - النسخة المتطورة مع الاستنطاق</title>
     <style>
         :root {
             --primary-color: #4a148c;
@@ -172,6 +172,7 @@
             display: flex;
             border-bottom: 1px solid #ddd;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
         .tab {
@@ -335,13 +336,54 @@
             padding: 2px 5px;
             border-radius: 3px;
         }
+        
+        .data-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .data-type {
+            padding: 8px 15px;
+            background-color: #eee;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .data-type.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .cell-content {
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .cell-name {
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .cell-details {
+            font-size: 0.7rem;
+            color: #555;
+        }
+        
+        .cell-number {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 2px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>مثلث باسكال العجيب - النسخة المتطورة</h1>
-            <p class="subtitle">تطبيق تفاعلي شامل مع خلية النحل، تفكيك المثلثات، ومعادلات العلماء والنظريات الرياضية</p>
+            <h1>مثلث باسكال العجيب - النسخة المتطورة مع الاستنطاق</h1>
+            <p class="subtitle">تطبيق تفاعلي شامل مع استنطاق الحروف، السور القرآنية، أسماء الله الحسنى، والرسل والفراعنة</p>
         </header>
         
         <div class="main-content">
@@ -368,6 +410,18 @@
                         <div class="display-style" data-style="triangle">مثلث تقليدي</div>
                         <div class="display-style" data-style="circle">دوائر</div>
                         <div class="display-style" data-style="square">مربعات</div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>نوع البيانات:</label>
+                    <div class="data-types">
+                        <div class="data-type active" data-type="numbers">أرقام باسكال</div>
+                        <div class="data-type" data-type="suras">السور القرآنية</div>
+                        <div class="data-type" data-type="allahNames">أسماء الله الحسنى</div>
+                        <div class="data-type" data-type="prophets">الرسل والأنبياء</div>
+                        <div class="data-type" data-type="pharaohs">الفراعنة</div>
+                        <div class="data-type" data-type="abjad">حساب الجمل</div>
                     </div>
                 </div>
                 
@@ -418,6 +472,7 @@
                     <div class="tab" data-tab="theories">النظريات الرياضية</div>
                     <div class="tab" data-tab="magic">الطلسم والأسرار</div>
                     <div class="tab" data-tab="scientists">معادلات العلماء</div>
+                    <div class="tab" data-tab="abjad-tab">حساب الجمل والاستنطاق</div>
                 </div>
                 
                 <div class="tab-content active" id="formulas-tab">
@@ -521,12 +576,41 @@
                         <!-- سيتم ملؤها ديناميكياً -->
                     </div>
                 </div>
+                
+                <div class="tab-content" id="abjad-tab">
+                    <h3>حساب الجمل والاستنطاق</h3>
+                    <div class="theory-section">
+                        <div class="theory-title">حساب الجمل الكبير</div>
+                        <div class="theory-content">
+                            <p>حساب الجمل هو نظام قديم لربط الحروف العربية بالأعداد. يستخدم في العديد من التطبيقات الصوفية والرياضية.</p>
+                            <div class="theory-formula">
+                                أ=1, ب=2, ج=3, د=4, ه=5, و=6, ز=7, ح=8, ط=9, ي=10, ك=20, ل=30, م=40, ن=50, س=60, ع=70, ف=80, ص=90, ق=100, ر=200, ش=300, ت=400, ث=500, خ=600, ذ=700, ض=800, ظ=900, غ=1000
+                            </div>
+                            <p>مثال: كلمة "الر" = أ (1) + ل (30) + ر (200) = 231</p>
+                            <p>كلمة "بي" = ب (2) + ي (10) = 12</p>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <div class="theory-title">الاستنطاق في المربعات</div>
+                        <div class="theory-content">
+                            <p>في هذا التطبيق، يمكنك استنطاق الحروف والكلمات وعرضها في مربعات مثلث باسكال.</p>
+                            <p>كل خلية تعرض:</p>
+                            <ul>
+                                <li>الاسم (سورة، اسم الله، رسول، فرعون، إلخ)</li>
+                                <li>السورة (إن وجدت)</li>
+                                <li>العدد (حساب الجمل أو رقم السورة)</li>
+                            </ul>
+                            <p>يمكنك التبديل بين أنواع البيانات المختلفة باستخدام خيارات "نوع البيانات" في لوحة التحكم.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
         <footer>
             <p>تم تطوير هذا التطبيق باستخدام HTML5 و Canvas و JavaScript</p>
-            <p>مثلث باسكال العجيب - النسخة المتطورة 2023</p>
+            <p>مثلث باسكال العجيب - النسخة المتطورة مع الاستنطاق 2023</p>
         </footer>
     </div>
 
@@ -555,6 +639,7 @@
         // عناصر الأنماط والألوان
         const displayStyles = document.querySelectorAll('.display-style');
         const colorSchemes = document.querySelectorAll('.color-scheme');
+        const dataTypes = document.querySelectorAll('.data-type');
         
         // تبويبات
         const tabs = document.querySelectorAll('.tab');
@@ -573,6 +658,7 @@
             triangleData: [],
             displayStyle: 'hexagon',
             colorScheme: 'default',
+            dataType: 'numbers',
             selectedHexagons: new Set(),
             history: [],
             ctrlPressed: false,
@@ -626,6 +712,290 @@
                 text: '#212121',
                 background: '#f5f5f5'
             }
+        };
+        
+        // بيانات الاستنطاق
+        const dataSets = {
+            // السور القرآنية
+            suras: [
+                { name: "الفاتحة", number: 1, details: "مكية" },
+                { name: "البقرة", number: 2, details: "مدنية" },
+                { name: "آل عمران", number: 3, details: "مدنية" },
+                { name: "النساء", number: 4, details: "مدنية" },
+                { name: "المائدة", number: 5, details: "مدنية" },
+                { name: "الأنعام", number: 6, details: "مكية" },
+                { name: "الأعراف", number: 7, details: "مكية" },
+                { name: "الأنفال", number: 8, details: "مدنية" },
+                { name: "التوبة", number: 9, details: "مدنية" },
+                { name: "يونس", number: 10, details: "مكية" },
+                { name: "هود", number: 11, details: "مكية" },
+                { name: "يوسف", number: 12, details: "مكية" },
+                { name: "الرعد", number: 13, details: "مدنية" },
+                { name: "إبراهيم", number: 14, details: "مكية" },
+                { name: "الحجر", number: 15, details: "مكية" },
+                { name: "النحل", number: 16, details: "مكية" },
+                { name: "الإسراء", number: 17, details: "مكية" },
+                { name: "الكهف", number: 18, details: "مكية" },
+                { name: "مريم", number: 19, details: "مكية" },
+                { name: "طه", number: 20, details: "مكية" },
+                { name: "الأنبياء", number: 21, details: "مكية" },
+                { name: "الحج", number: 22, details: "مدنية" },
+                { name: "المؤمنون", number: 23, details: "مكية" },
+                { name: "النور", number: 24, details: "مدنية" },
+                { name: "الفرقان", number: 25, details: "مكية" },
+                { name: "الشعراء", number: 26, details: "مكية" },
+                { name: "النمل", number: 27, details: "مكية" },
+                { name: "القصص", number: 28, details: "مكية" },
+                { name: "العنكبوت", number: 29, details: "مكية" },
+                { name: "الروم", number: 30, details: "مكية" },
+                { name: "لقمان", number: 31, details: "مكية" },
+                { name: "السجدة", number: 32, details: "مكية" },
+                { name: "الأحزاب", number: 33, details: "مدنية" },
+                { name: "سبأ", number: 34, details: "مكية" },
+                { name: "فاطر", number: 35, details: "مكية" },
+                { name: "يس", number: 36, details: "مكية" },
+                { name: "الصافات", number: 37, details: "مكية" },
+                { name: "ص", number: 38, details: "مكية" },
+                { name: "الزمر", number: 39, details: "مكية" },
+                { name: "غافر", number: 40, details: "مكية" },
+                { name: "فصلت", number: 41, details: "مكية" },
+                { name: "الشورى", number: 42, details: "مكية" },
+                { name: "الزخرف", number: 43, details: "مكية" },
+                { name: "الدخان", number: 44, details: "مكية" },
+                { name: "الجاثية", number: 45, details: "مكية" },
+                { name: "الأحقاف", number: 46, details: "مكية" },
+                { name: "محمد", number: 47, details: "مدنية" },
+                { name: "الفتح", number: 48, details: "مدنية" },
+                { name: "الحجرات", number: 49, details: "مدنية" },
+                { name: "ق", number: 50, details: "مكية" },
+                { name: "الذاريات", number: 51, details: "مكية" },
+                { name: "الطور", number: 52, details: "مكية" },
+                { name: "النجم", number: 53, details: "مكية" },
+                { name: "القمر", number: 54, details: "مكية" },
+                { name: "الرحمن", number: 55, details: "مدنية" },
+                { name: "الواقعة", number: 56, details: "مكية" },
+                { name: "الحديد", number: 57, details: "مدنية" },
+                { name: "المجادلة", number: 58, details: "مدنية" },
+                { name: "الحشر", number: 59, details: "مدنية" },
+                { name: "الممتحنة", number: 60, details: "مدنية" },
+                { name: "الصف", number: 61, details: "مدنية" },
+                { name: "الجمعة", number: 62, details: "مدنية" },
+                { name: "المنافقون", number: 63, details: "مدنية" },
+                { name: "التغابن", number: 64, details: "مدنية" },
+                { name: "الطلاق", number: 65, details: "مدنية" },
+                { name: "التحريم", number: 66, details: "مدنية" },
+                { name: "الملك", number: 67, details: "مكية" },
+                { name: "القلم", number: 68, details: "مكية" },
+                { name: "الحاقة", number: 69, details: "مكية" },
+                { name: "المعارج", number: 70, details: "مكية" },
+                { name: "نوح", number: 71, details: "مكية" },
+                { name: "الجن", number: 72, details: "مكية" },
+                { name: "المزمل", number: 73, details: "مكية" },
+                { name: "المدثر", number: 74, details: "مكية" },
+                { name: "القيامة", number: 75, details: "مكية" },
+                { name: "الإنسان", number: 76, details: "مدنية" },
+                { name: "المرسلات", number: 77, details: "مكية" },
+                { name: "النبأ", number: 78, details: "مكية" },
+                { name: "النازعات", number: 79, details: "مكية" },
+                { name: "عبس", number: 80, details: "مكية" },
+                { name: "التكوير", number: 81, details: "مكية" },
+                { name: "الانفطار", number: 82, details: "مكية" },
+                { name: "المطففين", number: 83, details: "مكية" },
+                { name: "الانشقاق", number: 84, details: "مكية" },
+                { name: "البروج", number: 85, details: "مكية" },
+                { name: "الطارق", number: 86, details: "مكية" },
+                { name: "الأعلى", number: 87, details: "مكية" },
+                { name: "الغاشية", number: 88, details: "مكية" },
+                { name: "الفجر", number: 89, details: "مكية" },
+                { name: "البلد", number: 90, details: "مكية" },
+                { name: "الشمس", number: 91, details: "مكية" },
+                { name: "الليل", number: 92, details: "مكية" },
+                { name: "الضحى", number: 93, details: "مكية" },
+                { name: "الشرح", number: 94, details: "مكية" },
+                { name: "التين", number: 95, details: "مكية" },
+                { name: "العلق", number: 96, details: "مكية" },
+                { name: "القدر", number: 97, details: "مكية" },
+                { name: "البينة", number: 98, details: "مدنية" },
+                { name: "الزلزلة", number: 99, details: "مدنية" },
+                { name: "العاديات", number: 100, details: "مكية" },
+                { name: "القارعة", number: 101, details: "مكية" },
+                { name: "التكاثر", number: 102, details: "مكية" },
+                { name: "العصر", number: 103, details: "مكية" },
+                { name: "الهمزة", number: 104, details: "مكية" },
+                { name: "الفيل", number: 105, details: "مكية" },
+                { name: "قريش", number: 106, details: "مكية" },
+                { name: "الماعون", number: 107, details: "مكية" },
+                { name: "الكوثر", number: 108, details: "مكية" },
+                { name: "الكافرون", number: 109, details: "مكية" },
+                { name: "النصر", number: 110, details: "مدنية" },
+                { name: "المسد", number: 111, details: "مكية" },
+                { name: "الإخلاص", number: 112, details: "مكية" },
+                { name: "الفلق", number: 113, details: "مكية" },
+                { name: "الناس", number: 114, details: "مكية" }
+            ],
+            
+            // أسماء الله الحسنى
+            allahNames: [
+                { name: "الرحمن", number: 298, details: "ذو الرحمة الواسعة" },
+                { name: "الرحيم", number: 258, details: "ذو الرحمة الخاصة" },
+                { name: "الملك", number: 90, details: "المالك لكل شيء" },
+                { name: "القدوس", number: 170, details: "المنزه عن النقائص" },
+                { name: "السلام", number: 131, details: "منزه عن كل عيب" },
+                { name: "المؤمن", number: 137, details: "المصدق لعباده" },
+                { name: "المهيمن", number: 145, details: "الشهيد على خلقه" },
+                { name: "العزيز", number: 94, details: "المنيع الذي لا يغلب" },
+                { name: "الجبار", number: 206, details: "الذي يجبر الضعيف" },
+                { name: "المتكبر", number: 662, details: "المتعالي عن صفات الخلق" },
+                { name: "الخالق", number: 731, details: "المبدع للخلق" },
+                { name: "البارئ", number: 213, details: "المصور للخلق" },
+                { name: "المصور", number: 336, details: "منشئ الصور المختلفة" },
+                { name: "الغفار", number: 1281, details: "ستار الذنوب" },
+                { name: "القهار", number: 306, details: "الغالب لكل شيء" },
+                { name: "الوهاب", number: 14, details: "المنعم بالعطايا" },
+                { name: "الرزاق", number: 308, details: "المتفضل بالأرزاق" },
+                { name: "الفتاح", number: 489, details: "الذي يفتح المغلقات" },
+                { name: "العليم", number: 150, details: "المحيط بكل شيء علماً" },
+                { name: "القابض", number: 903, details: "الذي يضيق الرزق" },
+                { name: "الباسط", number: 72, details: "الذي يوسع الرزق" },
+                { name: "الخافض", number: 1481, details: "الذي يذل من يشاء" },
+                { name: "الرافع", number: 351, details: "الذي يعز من يشاء" },
+                { name: "المعز", number: 117, details: "الذي يهب العزة" },
+                { name: "المذل", number: 770, details: "الذي ينزع العزة" },
+                { name: "السميع", number: 180, details: "الذي يسمع كل شيء" },
+                { name: "البصير", number: 302, details: "الذي يرى كل شيء" },
+                { name: "الحكم", number: 68, details: "الذي يحكم بين الخلق" },
+                { name: "العدل", number: 104, details: "المنزه عن الظلم" },
+                { name: "اللطيف", number: 129, details: "الذي يعلم دقائق الأمور" },
+                { name: "الخبير", number: 812, details: "المحيط علمه بالخفايا" },
+                { name: "الحليم", number: 88, details: "الصفوح عن الزلات" },
+                { name: "العظيم", number: 1020, details: "ذو العظمة والجلال" },
+                { name: "الغفور", number: 1286, details: "الكثير المغفرة" },
+                { name: "الشكور", number: 526, details: "المقبل للقليل من الطاعة" },
+                { name: "العلي", number: 110, details: "الرفيع فوق خلقه" },
+                { name: "الكبير", number: 232, details: "العظيم في ذاته وصفاته" },
+                { name: "الحفيظ", number: 998, details: "الحافظ لكل شيء" },
+                { name: "المقيت", number: 550, details: "الذي يوصل الأرزاق" },
+                { name: "الحسيب", number: 80, details: "الكافي لعباده" },
+                { name: "الجليل", number: 73, details: "ذو الجلال والعظمة" },
+                { name: "الكريم", number: 270, details: "الواسع العطاء" },
+                { name: "الرقيب", number: 312, details: "المراقب لأعمال العباد" },
+                { name: "المجيب", number: 55, details: "الذي يجيب الدعاء" },
+                { name: "الواسع", number: 137, details: "الغني الذي وسع كل شيء" },
+                { name: "الحكيم", number: 78, details: "ذي الحكمة في أفعاله" },
+                { name: "الودود", number: 20, details: "المحب لعباده" },
+                { name: "المجيد", number: 57, details: "ذي المجد والعظمة" },
+                { name: "الباعث", number: 573, details: "الذي يبعث الخلق" },
+                { name: "الشهيد", number: 319, details: "الذي يشهد على كل شيء" },
+                { name: "الحق", number: 108, details: "الذي لا يخلف وعده" },
+                { name: "الوكيل", number: 66, details: "الكفيل بأرزاق العباد" },
+                { name: "القوي", number: 116, details: "ذي القوة التامة" },
+                { name: "المتين", number: 500, details: "الشديد الذي لا ينال" },
+                { name: "الولي", number: 46, details: "الناصر لأوليائه" },
+                { name: "الحميد", number: 62, details: "المستحق للحمد" },
+                { name: "المحصي", number: 148, details: "العالم بعدد كل شيء" },
+                { name: "المبدئ", number: 56, details: "الذي أنشأ الخلق" },
+                { name: "المعيد", number: 124, details: "الذي يعيد الخلق" },
+                { name: "المحيي", number: 68, details: "الذي يحيي الموتى" },
+                { name: "المميت", number: 490, details: "الذي يميت الأحياء" },
+                { name: "الحي", number: 18, details: "ذي الحياة الأبدية" },
+                { name: "القيوم", number: 156, details: "القائم بنفسه" },
+                { name: "الواجد", number: 14, details: "الغني الذي لا يفقد" },
+                { name: "الماجد", number: 48, details: "ذي الكرم والمجد" },
+                { name: "الواحد", number: 19, details: "المنفرد بالوحدانية" },
+                { name: "الأحد", number: 13, details: "الذي لم يلد ولم يولد" },
+                { name: "الصمد", number: 134, details: "الذي تصمد إليه الخلائق" },
+                { name: "القادر", number: 305, details: "ذي القدرة التامة" },
+                { name: "المقتدر", number: 744, details: "ذي التصرف المطلق" },
+                { name: "المقدم", number: 184, details: "الذي يقدم من يشاء" },
+                { name: "المؤخر", number: 847, details: "الذي يؤخر من يشاء" },
+                { name: "الأول", number: 37, details: "الذي ليس قبله شيء" },
+                { name: "الآخر", number: 802, details: "الذي ليس بعده شيء" },
+                { name: "الظاهر", number: 1106, details: "الذي علا فوق كل شيء" },
+                { name: "الباطن", number: 62, details: "الذي دنا من كل شيء" },
+                { name: "الوالي", number: 47, details: "المتصرف في الكون" },
+                { name: "المتعالي", number: 551, details: "المنزه عن النقائص" },
+                { name: "البر", number: 202, details: "اللطيف بعباده" },
+                { name: "التواب", number: 409, details: "الذي يقبل التوبة" },
+                { name: "المنتقم", number: 630, details: "الذي ينتصر من الظالمين" },
+                { name: "العفو", number: 156, details: "الذي يصفح عن الذنوب" },
+                { name: "الرؤوف", number: 292, details: "ذي الرحمة الواسعة" },
+                { name: "مالك الملك", number: 212, details: "صاحب الملك والتصرف" },
+                { name: "ذو الجلال والإكرام", number: 1100, details: "صاحب العظمة والكرم" },
+                { name: "المقسط", number: 339, details: "الذي يحكم بالعدل" },
+                { name: "الجامع", number: 114, details: "الذي يجمع الخلائق" },
+                { name: "الغني", number: 1060, details: "المستغني عن الخلق" },
+                { name: "المغني", number: 1100, details: "الذي يغني من يشاء" },
+                { name: "المانع", number: 161, details: "الذي يمنع العطاء" },
+                { name: "الضار", number: 1001, details: "الذي يضر من يشاء" },
+                { name: "النافع", number: 201, details: "الذي ينفع من يشاء" },
+                { name: "النور", number: 256, details: "الهادي إلى الحق" },
+                { name: "الهادي", number: 20, details: "الذي يهدي إلى الصراط" },
+                { name: "البديع", number: 86, details: "المبتدع للخلق" },
+                { name: "الباقي", number: 113, details: "الدائم الذي لا يزول" },
+                { name: "الوارث", number: 707, details: "الباقي بعد فناء الخلق" },
+                { name: "الرشيد", number: 514, details: "الذي يرشد إلى الحق" },
+                { name: "الصبور", number: 298, details: "ذي الصبر على المعاصي" }
+            ],
+            
+            // الرسل والأنبياء
+            prophets: [
+                { name: "آدم", number: 45, details: "أبو البشر" },
+                { name: "إدريس", number: 275, details: "أول من خط بالقلم" },
+                { name: "نوح", number: 64, details: "صاحب السفينة" },
+                { name: "هود", number: 15, details: "رسول إلى عاد" },
+                { name: "صالح", number: 109, details: "رسول إلى ثمود" },
+                { name: "إبراهيم", number: 258, details: "خليل الله" },
+                { name: "لوط", number: 71, details: "ابن أخ إبراهيم" },
+                { name: "إسماعيل", number: 211, details: "الذبيح" },
+                { name: "إسحاق", number: 169, details: "ابن إبراهيم" },
+                { name: "يعقوب", number: 182, details: "إسرائيل" },
+                { name: "يوسف", number: 156, details: "الصديق" },
+                { name: "أيوب", number: 43, details: "الصابر" },
+                { name: "شعيب", number: 149, details: "خطيب الأنبياء" },
+                { name: "موسى", number: 116, details: "كليم الله" },
+                { name: "هارون", number: 261, details: "أخو موسى" },
+                { name: "داود", number: 15, details: "الملك النبي" },
+                { name: "سليمان", number: 175, details: "ابن داود" },
+                { name: "إلياس", number: 82, details: "رسول إلى بني إسرائيل" },
+                { name: "اليسع", number: 201, details: "خليفة إلياس" },
+                { name: "يونس", number: 126, details: "صاحب الحوت" },
+                { name: "زكريا", number: 241, details: "أبو يحيى" },
+                { name: "يحيى", number: 32, details: "ابن زكريا" },
+                { name: "عيسى", number: 150, details: "روح الله" },
+                { name: "محمد", number: 92, details: "خاتم الأنبياء" }
+            ],
+            
+            // الفراعنة
+            pharaohs: [
+                { name: "نارمر", number: 255, details: "موحد مصر" },
+                { name: "خوفو", number: 56, details: "باني الهرم الأكبر" },
+                { name: "خفرع", number: 355, details: "باني الهرم الثاني" },
+                { name: "منكاورع", number: 336, details: "باني الهرم الثالث" },
+                { name: "أحمس", number: 154, details: "طرد الهكسوس" },
+                { name: "حتشبسوت", number: 1285, details: "الملكة الفرعونية" },
+                { name: "تحتمس الثالث", number: 1290, details: "الإمبراطور المحارب" },
+                { name: "أمنحتب الثالث", number: 250, details: "عصر الازدهار" },
+                { name: "أخناتون", number: 401, details: "المصلح الديني" },
+                { name: "توت عنخ آمون", number: 1200, details: "الملك الطفل" },
+                { name: "رمسيس الثاني", number: 1100, details: "رمسيس العظيم" },
+                { name: "رمسيس الثالث", number: 900, details: "آخر الفراعنة العظام" },
+                { name: "نفرتيتي", number: 630, details: "الزوجة الملكية" },
+                { name: "كليوباترا", number: 571, details: "آخر ملكات البطالمة" }
+            ],
+            
+            // حساب الجمل
+            abjad: [
+                { name: "الر", number: 231, details: "أ ل ر = 1+30+200" },
+                { name: "بي", number: 12, details: "ب ي = 2+10" },
+                { name: "حم", number: 48, details: "ح م = 8+40" },
+                { name: "عسق", number: 270, details: "ع س ق = 70+60+100" },
+                { name: "كهيعص", number: 195, details: "ك هـ ي ع ص = 20+5+10+70+90" },
+                { name: "طس", number: 69, details: "ط س = 9+60" },
+                { name: "يس", number: 70, details: "ي س = 10+60" },
+                { name: "ص", number: 90, details: "ص = 90" },
+                { name: "ق", number: 100, details: "ق = 100" },
+                { name: "ن", number: 50, details: "ن = 50" }
+            ]
         };
         
         // تهيئة حجم Canvas
@@ -798,26 +1168,8 @@
             }
             ctx.stroke();
             
-            // كتابة الرقم
-            ctx.fillStyle = colors.text;
-            
-            // تحديد حجم الخط بناءً على حجم العدد
-            let fontSize = 16;
-            if (number > 999) fontSize = 12;
-            if (number > 9999) fontSize = 10;
-            if (number > 99999) fontSize = 8;
-            
-            ctx.font = `${fontSize}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            
-            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
-            let displayNumber = number;
-            if (number > 1e6) {
-                displayNumber = number.toExponential(2);
-            }
-            
-            ctx.fillText(displayNumber, x, y);
+            // كتابة البيانات
+            drawCellContent(x, y, number, row, col);
         }
         
         // رسم خلية مثلثية
@@ -849,26 +1201,8 @@
             }
             ctx.stroke();
             
-            // كتابة الرقم
-            ctx.fillStyle = colors.text;
-            
-            // تحديد حجم الخط بناءً على حجم العدد
-            let fontSize = 14;
-            if (number > 999) fontSize = 10;
-            if (number > 9999) fontSize = 8;
-            if (number > 99999) fontSize = 6;
-            
-            ctx.font = `${fontSize}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            
-            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
-            let displayNumber = number;
-            if (number > 1e6) {
-                displayNumber = number.toExponential(2);
-            }
-            
-            ctx.fillText(displayNumber, x, y + size/2);
+            // كتابة البيانات
+            drawCellContent(x, y + size/2, number, row, col);
         }
         
         // رسم دائرة
@@ -898,26 +1232,8 @@
             }
             ctx.stroke();
             
-            // كتابة الرقم
-            ctx.fillStyle = colors.text;
-            
-            // تحديد حجم الخط بناءً على حجم العدد
-            let fontSize = 14;
-            if (number > 999) fontSize = 10;
-            if (number > 9999) fontSize = 8;
-            if (number > 99999) fontSize = 6;
-            
-            ctx.font = `${fontSize}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            
-            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
-            let displayNumber = number;
-            if (number > 1e6) {
-                displayNumber = number.toExponential(2);
-            }
-            
-            ctx.fillText(displayNumber, x, y);
+            // كتابة البيانات
+            drawCellContent(x, y, number, row, col);
         }
         
         // رسم مربع
@@ -947,26 +1263,58 @@
             }
             ctx.stroke();
             
-            // كتابة الرقم
+            // كتابة البيانات
+            drawCellContent(x, y, number, row, col);
+        }
+        
+        // رسم محتوى الخلية
+        function drawCellContent(x, y, number, row, col) {
+            const colors = colorSchemesMap[state.colorScheme];
             ctx.fillStyle = colors.text;
-            
-            // تحديد حجم الخط بناءً على حجم العدد
-            let fontSize = 14;
-            if (number > 999) fontSize = 10;
-            if (number > 9999) fontSize = 8;
-            if (number > 99999) fontSize = 6;
-            
-            ctx.font = `${fontSize}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
-            let displayNumber = number;
-            if (number > 1e6) {
-                displayNumber = number.toExponential(2);
+            // الحصول على البيانات بناءً على النوع المحدد
+            let cellData = getCellData(number, row, col);
+            
+            // تحديد حجم الخط بناءً على حجم الخلية ونوع البيانات
+            let fontSize = state.dataType === 'numbers' ? 14 : 10;
+            if (state.layers > 20) fontSize = Math.max(8, fontSize - 2);
+            if (state.layers > 50) fontSize = Math.max(6, fontSize - 2);
+            
+            ctx.font = `${fontSize}px Arial`;
+            
+            if (state.dataType === 'numbers') {
+                // إذا كان العدد كبير جداً، عرضه بشكل مختصر
+                let displayNumber = number;
+                if (number > 1e6) {
+                    displayNumber = number.toExponential(2);
+                }
+                ctx.fillText(displayNumber, x, y);
+            } else {
+                // عرض البيانات النصية
+                ctx.fillText(cellData.name, x, y - (fontSize * 0.8));
+                
+                if (cellData.details) {
+                    ctx.font = `${fontSize * 0.7}px Arial`;
+                    ctx.fillText(cellData.details, x, y);
+                }
+                
+                ctx.font = `${fontSize * 0.8}px Arial`;
+                ctx.fillText(cellData.number.toString(), x, y + (fontSize * 0.8));
+            }
+        }
+        
+        // الحصول على بيانات الخلية بناءً على النوع المحدد
+        function getCellData(number, row, col) {
+            const dataSet = dataSets[state.dataType];
+            if (!dataSet) {
+                return { name: number.toString(), number: number, details: "" };
             }
             
-            ctx.fillText(displayNumber, x, y);
+            // حساب الفهرس بناءً على الصف والعمود
+            const index = (row * (row + 1) / 2 + col) % dataSet.length;
+            return dataSet[index];
         }
         
         // الحصول على إحداثيات الخلية من إحداثيات الماوس
@@ -1062,6 +1410,17 @@
         // توليد شرح للرقم
         function generateNumberExplanation(number, row, col) {
             let explanation = "";
+            
+            // إذا كان نوع البيانات غير الأرقام، أضف معلومات إضافية
+            if (state.dataType !== 'numbers') {
+                const cellData = getCellData(number, row, col);
+                explanation = `الاسم: ${cellData.name} | العدد: ${cellData.number}`;
+                if (cellData.details) {
+                    explanation += ` | التفاصيل: ${cellData.details}`;
+                }
+                explanation += `. يقع هذا العنصر في الصف ${row+1}, العمود ${col+1} من المثلث.`;
+                return explanation;
+            }
             
             // شرح بناءً على قيمة الرقم
             if (number === 1) {
@@ -1357,7 +1716,21 @@
                 <p>مستوى التكبير: ${state.zoom.toFixed(1)}</p>
                 <p>الخلايا المحددة: ${state.selectedHexagons.size}</p>
                 <p>الخلايا المفككة: ${state.explodedCells.size}</p>
+                <p>نوع البيانات: ${getDataTypeName(state.dataType)}</p>
             `;
+        }
+        
+        // الحصول على اسم نوع البيانات
+        function getDataTypeName(type) {
+            const names = {
+                'numbers': 'أرقام باسكال',
+                'suras': 'السور القرآنية',
+                'allahNames': 'أسماء الله الحسنى',
+                'prophets': 'الرسل والأنبياء',
+                'pharaohs': 'الفراعنة',
+                'abjad': 'حساب الجمل'
+            };
+            return names[type] || type;
         }
         
         // تحديث شريط الحالة
@@ -1456,6 +1829,17 @@
                     state.displayStyle = this.getAttribute('data-style');
                     drawPascalTriangle();
                     updateStatusBar(`تم تغيير نمط العرض إلى: ${this.textContent}`);
+                });
+            });
+            
+            // أنواع البيانات
+            dataTypes.forEach(type => {
+                type.addEventListener('click', function() {
+                    dataTypes.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    state.dataType = this.getAttribute('data-type');
+                    drawPascalTriangle();
+                    updateStatusBar(`تم تغيير نوع البيانات إلى: ${this.textContent}`);
                 });
             });
             
