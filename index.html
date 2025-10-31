@@ -1,0 +1,1574 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مثلث باسكال العجيب - النسخة المتطورة</title>
+    <style>
+        :root {
+            --primary-color: #4a148c;
+            --secondary-color: #7b1fa2;
+            --accent-color: #e1bee7;
+            --text-color: #212121;
+            --background-color: #f5f5f5;
+            --hexagon-color: #e1f5fe;
+            --hexagon-border: #7b1fa2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 30px;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .exploded-panel {
+                order: 3;
+            }
+        }
+        
+        .controls {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        .range-value {
+            display: inline-block;
+            width: 50px;
+            text-align: center;
+            margin-left: 10px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .canvas-container {
+            position: relative;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            min-height: 500px;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .exploded-panel {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .exploded-item {
+            background-color: var(--accent-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .exploded-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .exploded-content {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .info-panel {
+            grid-column: 1 / -1;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-top: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .formulas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .formula-card {
+            background-color: var(--accent-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .formula-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .formula-content {
+            font-family: 'Courier New', monospace;
+        }
+        
+        .color-schemes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-scheme {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-scheme.active {
+            border-color: #333;
+        }
+        
+        .display-styles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .display-style {
+            padding: 8px 15px;
+            background-color: #eee;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .display-style.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .history-controls {
+            margin-top: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        
+        .exploded-number {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theory-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-right: 4px solid var(--primary-color);
+        }
+        
+        .theory-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .theory-content {
+            line-height: 1.8;
+        }
+        
+        .theory-formula {
+            background-color: #e8eaf6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: center;
+        }
+        
+        .theory-example {
+            background-color: #e0f2f1;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>مثلث باسكال العجيب - النسخة المتطورة</h1>
+            <p class="subtitle">تطبيق تفاعلي شامل مع خلية النحل، تفكيك المثلثات، ومعادلات العلماء والنظريات الرياضية</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="layers">عدد طبقات المثلث: <span id="layers-value" class="range-value">5</span></label>
+                    <input type="range" id="layers" min="1" max="111" value="5">
+                </div>
+                
+                <div class="control-group">
+                    <label for="rotation">درجة التدوير: <span id="rotation-value" class="range-value">0</span></label>
+                    <input type="range" id="rotation" min="0" max="2300" value="0">
+                </div>
+                
+                <div class="control-group">
+                    <label for="zoom">مستوى التكبير: <span id="zoom-value" class="range-value">1.0</span></label>
+                    <input type="range" id="zoom" min="0.1" max="3" step="0.1" value="1.0">
+                </div>
+                
+                <div class="control-group">
+                    <label>نمط العرض:</label>
+                    <div class="display-styles">
+                        <div class="display-style active" data-style="hexagon">خلية النحل</div>
+                        <div class="display-style" data-style="triangle">مثلث تقليدي</div>
+                        <div class="display-style" data-style="circle">دوائر</div>
+                        <div class="display-style" data-style="square">مربعات</div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>نظام الألوان:</label>
+                    <div class="color-schemes">
+                        <div class="color-scheme active" style="background: linear-gradient(135deg, #4a148c, #7b1fa2);" data-scheme="default"></div>
+                        <div class="color-scheme" style="background: linear-gradient(135deg, #00695c, #004d40);" data-scheme="green"></div>
+                        <div class="color-scheme" style="background: linear-gradient(135deg, #b71c1c, #c62828);" data-scheme="red"></div>
+                        <div class="color-scheme" style="background: linear-gradient(135deg, #0d47a1, #1565c0);" data-scheme="blue"></div>
+                        <div class="color-scheme" style="background: linear-gradient(135deg, #4a148c, #6a1b9a);" data-scheme="purple"></div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <button id="reset-view">إعادة ضبط العرض</button>
+                    <button id="calculate">حساب المعادلات</button>
+                    <button id="reset-triangle">إعادة تعيين المثلث</button>
+                </div>
+                
+                <div class="control-group history-controls">
+                    <button id="undo-btn" disabled>تراجع (زر الماوس الأيمن)</button>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">للتفكيك: اضغط Ctrl + زر الماوس الأيسر على أي مثلث</p>
+                </div>
+                
+                <div class="control-group">
+                    <h3>خصائص المثلث</h3>
+                    <p id="triangle-properties">سيتم عرض خصائص المثلث هنا بعد الحساب</p>
+                </div>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="pascalCanvas"></canvas>
+                <div class="status-bar" id="status-bar">جاهز - اضغط Ctrl + زر الماوس الأيسر لتفكيك المثلثات</div>
+            </div>
+            
+            <div class="exploded-panel">
+                <h3>الخلايا المفككة وشرحها</h3>
+                <div id="exploded-container">
+                    <!-- سيتم ملؤها ديناميكياً -->
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <div class="tabs">
+                    <div class="tab active" data-tab="formulas">المعادلات المستخرجة</div>
+                    <div class="tab" data-tab="analysis">التحليل النظري والهندسي</div>
+                    <div class="tab" data-tab="theories">النظريات الرياضية</div>
+                    <div class="tab" data-tab="magic">الطلسم والأسرار</div>
+                    <div class="tab" data-tab="scientists">معادلات العلماء</div>
+                </div>
+                
+                <div class="tab-content active" id="formulas-tab">
+                    <div class="formulas" id="formulas-container">
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="analysis-tab">
+                    <h3>التحليل النظري والهندسي</h3>
+                    <p>مثلث باسكال هو ترتيب هندسي للأعداد يتبع قاعدة رياضية بسيطة حيث كل عدد هو مجموع العددين الموجودين فوقه مباشرة.</p>
+                    <p>في الشكل السداسي، يمكن ملاحظة العديد من الخصائص الهندسية المثيرة:</p>
+                    <ul>
+                        <li>تناظر محوري حول المحور الرأسي</li>
+                        <li>تتابع فيبوناتشي يمكن استخراجه من الأقطار</li>
+                        <li>معاملات ذات الحدين (a+b)^n</li>
+                        <li>أعداد مثلثية ومربعة ومكعبة</li>
+                        <li>تطبيقات في نظرية الاحتمالات والإحصاء</li>
+                    </ul>
+                    <p>يمكن استخدام هذه الخصائص في حل مسائل التوافقيات ونظرية الأعداد والجبر.</p>
+                </div>
+                
+                <div class="tab-content" id="theories-tab">
+                    <div class="theory-section">
+                        <div class="theory-title">متسلسلة فيبوناتشي ومثلث باسكال</div>
+                        <div class="theory-content">
+                            <p>متسلسلة فيبوناتشي هي متتالية عددية تبدأ بـ 0 و 1، وكل عدد لاحق هو مجموع العددين السابقين له:</p>
+                            <div class="theory-formula">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...</div>
+                            <p>يمكن استخراج متسلسلة فيبوناتشي من مثلث باسكال عن طريق جمع الأعداد على الأقطار المائلة:</p>
+                            <div class="theory-example">
+                                <p>لاحظ أن الأعداد على الأقطار المائلة في مثلث باسكال تشكل متسلسلة فيبوناتشي:</p>
+                                <p>القطر الأول: 1 = 1</p>
+                                <p>القطر الثاني: 1 = 1</p>
+                                <p>القطر الثالث: 1+1 = 2</p>
+                                <p>القطر الرابع: 1+2 = 3</p>
+                                <p>القطر الخامس: 1+3+1 = 5</p>
+                                <p>القطر السادس: 1+4+3 = 8</p>
+                                <p>وهكذا...</p>
+                            </div>
+                            <p>هذه العلاقة تعكس الارتباط العميق بين التوافقيات ومتسلسلة فيبوناتشي.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <div class="theory-title">الأعداد المثلثية والمربعة</div>
+                        <div class="theory-content">
+                            <p>يمكن استخراج الأعداد المثلثية من العمود الثاني في مثلث باسكال:</p>
+                            <div class="theory-formula">1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...</div>
+                            <p>هذه الأعداد تمثل عدد النقاط في مثلث متساوي الأضلاع.</p>
+                            <p>الأعداد المربعة يمكن استخراجها من مجموع عددين مثلثين متتاليين:</p>
+                            <div class="theory-formula">1+3=4, 3+6=9, 6+10=16, 10+15=25, ...</div>
+                            <p>هذه العلاقات توضح كيف يمكن لمثلث باسكال أن يربط بين أنواع مختلفة من المتتاليات العددية.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <div class="theory-title">معاملات ذات الحدين</div>
+                        <div class="theory-content">
+                            <p>مثلث باسكال يمثل معاملات ذات الحدين في نظرية ذات الحدين:</p>
+                            <div class="theory-formula">(a+b)^n = C(n,0)a^n + C(n,1)a^(n-1)b + ... + C(n,n)b^n</div>
+                            <p>حيث C(n,k) هي معاملات ذات الحدين الموجودة في مثلث باسكال.</p>
+                            <p>على سبيل المثال، لـ n=4:</p>
+                            <div class="theory-formula">(a+b)^4 = 1a^4 + 4a^3b + 6a^2b^2 + 4ab^3 + 1b^4</div>
+                            <p>الأعداد 1, 4, 6, 4, 1 هي الصف الرابع في مثلث باسكال.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="theory-section">
+                        <div class="theory-title">النظرية التوافقية</div>
+                        <div class="theory-content">
+                            <p>يمثل مثلث باسكال عدد الطرق لاختيار k عنصر من n عنصر:</p>
+                            <div class="theory-formula">C(n,k) = n! / (k!(n-k)!)</div>
+                            <p>حيث C(n,k) هو العدد في الصف n والعمود k من مثلث باسكال.</p>
+                            <p>هذه العلاقة أساسية في التوافقيات ونظرية الاحتمالات.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="magic-tab">
+                    <h3>الطلسم والأسرار</h3>
+                    <p>في التراث الرياضي العربي والإسلامي، ارتبط مثلث باسكال بالعديد من التطبيقات في علم الطلسم والأسرار.</p>
+                    <p>طريقة حساب الطلسم:</p>
+                    <ol>
+                        <li>اختر عدد الطبقات المرغوبة (عادة أعداد فردية)</li>
+                        <li>حدد النقطة المركزية في المثلث</li>
+                        <li>استخدم الأعداد في مسارات محددة لتكوين أنماط رياضية</li>
+                        <li>اجمع الأعداد في مجموعات خاصة وفقاً للقواعد المطلوبة</li>
+                    </ol>
+                    <p>استخراج الأسرار من الطلسم:</p>
+                    <ul>
+                        <li>الأسرار العددية: تحليل العلاقات بين الأعداد في المثلث</li>
+                        <li>الأسرار الهندسية: دراسة الأشكال والنماذج المتكونة</li>
+                        <li>الأسرار الكونية: ربط الأعداد بالنظريات الفلكية والفلسفية</li>
+                    </ul>
+                    <p>يمكن استخدام هذه الأسرار في التطبيقات العملية مثل التشفير والتنبؤ وتحليل البيانات.</p>
+                </div>
+                
+                <div class="tab-content" id="scientists-tab">
+                    <h3>معادلات العلماء من مثلث باسكال</h3>
+                    <div class="formulas" id="scientists-formulas">
+                        <!-- سيتم ملؤها ديناميكياً -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>تم تطوير هذا التطبيق باستخدام HTML5 و Canvas و JavaScript</p>
+            <p>مثلث باسكال العجيب - النسخة المتطورة 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // العناصر الرئيسية
+        const canvas = document.getElementById('pascalCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // عناصر التحكم
+        const layersSlider = document.getElementById('layers');
+        const layersValue = document.getElementById('layers-value');
+        const rotationSlider = document.getElementById('rotation');
+        const rotationValue = document.getElementById('rotation-value');
+        const zoomSlider = document.getElementById('zoom');
+        const zoomValue = document.getElementById('zoom-value');
+        const resetButton = document.getElementById('reset-view');
+        const calculateButton = document.getElementById('calculate');
+        const resetTriangleButton = document.getElementById('reset-triangle');
+        const undoButton = document.getElementById('undo-btn');
+        const triangleProperties = document.getElementById('triangle-properties');
+        const formulasContainer = document.getElementById('formulas-container');
+        const scientistsFormulasContainer = document.getElementById('scientists-formulas');
+        const statusBar = document.getElementById('status-bar');
+        const explodedContainer = document.getElementById('exploded-container');
+        
+        // عناصر الأنماط والألوان
+        const displayStyles = document.querySelectorAll('.display-style');
+        const colorSchemes = document.querySelectorAll('.color-scheme');
+        
+        // تبويبات
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // حالة التطبيق
+        let state = {
+            layers: 5,
+            rotation: 0,
+            zoom: 1.0,
+            offsetX: 0,
+            offsetY: 0,
+            isDragging: false,
+            lastX: 0,
+            lastY: 0,
+            triangleData: [],
+            displayStyle: 'hexagon',
+            colorScheme: 'default',
+            selectedHexagons: new Set(),
+            history: [],
+            ctrlPressed: false,
+            explodedCells: new Map() // خلايا مفككة مع شرحها
+        };
+        
+        // أنظمة الألوان
+        const colorSchemesMap = {
+            default: {
+                primary: '#4a148c',
+                secondary: '#7b1fa2',
+                accent: '#e1bee7',
+                hexagon: '#e1f5fe',
+                hexagonBorder: '#7b1fa2',
+                text: '#212121',
+                background: '#f5f5f5'
+            },
+            green: {
+                primary: '#00695c',
+                secondary: '#004d40',
+                accent: '#b2dfdb',
+                hexagon: '#e0f2f1',
+                hexagonBorder: '#00695c',
+                text: '#212121',
+                background: '#f5f5f5'
+            },
+            red: {
+                primary: '#b71c1c',
+                secondary: '#c62828',
+                accent: '#ffcdd2',
+                hexagon: '#ffebee',
+                hexagonBorder: '#b71c1c',
+                text: '#212121',
+                background: '#f5f5f5'
+            },
+            blue: {
+                primary: '#0d47a1',
+                secondary: '#1565c0',
+                accent: '#bbdefb',
+                hexagon: '#e3f2fd',
+                hexagonBorder: '#0d47a1',
+                text: '#212121',
+                background: '#f5f5f5'
+            },
+            purple: {
+                primary: '#4a148c',
+                secondary: '#6a1b9a',
+                accent: '#e1bee7',
+                hexagon: '#f3e5f5',
+                hexagonBorder: '#4a148c',
+                text: '#212121',
+                background: '#f5f5f5'
+            }
+        };
+        
+        // تهيئة حجم Canvas
+        function initCanvas() {
+            const container = canvas.parentElement;
+            // استخدام دقة عالية للـ Canvas
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = container.clientWidth * dpr;
+            canvas.height = container.clientHeight * dpr;
+            canvas.style.width = container.clientWidth + 'px';
+            canvas.style.height = container.clientHeight + 'px';
+            ctx.scale(dpr, dpr);
+            
+            // حساب الإزاحة لجعل المثلث في المركز
+            state.offsetX = container.clientWidth / 2;
+            state.offsetY = container.clientHeight / 2;
+            
+            drawPascalTriangle();
+        }
+        
+        // توليد مثلث باسكال
+        function generatePascalTriangle(layers) {
+            const triangle = [];
+            for (let i = 0; i < layers; i++) {
+                triangle[i] = [];
+                for (let j = 0; j <= i; j++) {
+                    if (j === 0 || j === i) {
+                        triangle[i][j] = 1;
+                    } else {
+                        triangle[i][j] = triangle[i-1][j-1] + triangle[i-1][j];
+                    }
+                }
+            }
+            return triangle;
+        }
+        
+        // رسم مثلث باسكال
+        function drawPascalTriangle() {
+            // مسح Canvas
+            const container = canvas.parentElement;
+            ctx.clearRect(0, 0, container.clientWidth, container.clientHeight);
+            
+            // تطبيق التحويلات
+            ctx.save();
+            ctx.translate(state.offsetX, state.offsetY);
+            ctx.rotate(state.rotation * Math.PI / 180);
+            ctx.scale(state.zoom, state.zoom);
+            
+            // توليد بيانات المثلث
+            state.triangleData = generatePascalTriangle(state.layers);
+            
+            // الرسم بناءً على نمط العرض المحدد
+            switch(state.displayStyle) {
+                case 'hexagon':
+                    drawHexagonPattern();
+                    break;
+                case 'triangle':
+                    drawTrianglePattern();
+                    break;
+                case 'circle':
+                    drawCirclePattern();
+                    break;
+                case 'square':
+                    drawSquarePattern();
+                    break;
+            }
+            
+            ctx.restore();
+        }
+        
+        // رسم نمط خلية النحل
+        function drawHexagonPattern() {
+            const hexSize = Math.max(20, 40 - state.layers * 0.3); // تقليل الحجم مع زيادة الطبقات
+            const hexWidth = Math.sqrt(3) * hexSize;
+            const hexHeight = 2 * hexSize;
+            
+            // رسم السداسيات
+            for (let row = 0; row < state.triangleData.length; row++) {
+                for (let col = 0; col < state.triangleData[row].length; col++) {
+                    // حساب موقع السداسي
+                    const x = (col - row/2) * hexWidth;
+                    const y = row * hexHeight * 0.75;
+                    
+                    // رسم السداسي
+                    drawHexagon(x, y, hexSize, state.triangleData[row][col], row, col);
+                }
+            }
+        }
+        
+        // رسم نمط المثلث التقليدي
+        function drawTrianglePattern() {
+            const cellSize = Math.max(20, 40 - state.layers * 0.3);
+            
+            for (let row = 0; row < state.triangleData.length; row++) {
+                for (let col = 0; col < state.triangleData[row].length; col++) {
+                    const x = (col - row/2) * cellSize;
+                    const y = row * cellSize;
+                    
+                    // رسم المثلث
+                    drawTriangleCell(x, y, cellSize, state.triangleData[row][col], row, col);
+                }
+            }
+        }
+        
+        // رسم نمط الدوائر
+        function drawCirclePattern() {
+            const radius = Math.max(10, 20 - state.layers * 0.15);
+            const spacing = Math.max(25, 45 - state.layers * 0.3);
+            
+            for (let row = 0; row < state.triangleData.length; row++) {
+                for (let col = 0; col < state.triangleData[row].length; col++) {
+                    const x = (col - row/2) * spacing;
+                    const y = row * spacing;
+                    
+                    // رسم الدائرة
+                    drawCircle(x, y, radius, state.triangleData[row][col], row, col);
+                }
+            }
+        }
+        
+        // رسم نمط المربعات
+        function drawSquarePattern() {
+            const size = Math.max(15, 35 - state.layers * 0.25);
+            const spacing = Math.max(20, 40 - state.layers * 0.3);
+            
+            for (let row = 0; row < state.triangleData.length; row++) {
+                for (let col = 0; col < state.triangleData[row].length; col++) {
+                    const x = (col - row/2) * spacing;
+                    const y = row * spacing;
+                    
+                    // رسم المربع
+                    drawSquare(x, y, size, state.triangleData[row][col], row, col);
+                }
+            }
+        }
+        
+        // رسم شكل سداسي
+        function drawHexagon(x, y, size, number, row, col) {
+            const hexId = `${row}-${col}`;
+            const isSelected = state.selectedHexagons.has(hexId);
+            const isExploded = state.explodedCells.has(hexId);
+            const colors = colorSchemesMap[state.colorScheme];
+            
+            if (isExploded) return; // لا ترسم الخلايا المفككة
+            
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI / 3) * i;
+                const hx = x + size * Math.cos(angle);
+                const hy = y + size * Math.sin(angle);
+                if (i === 0) {
+                    ctx.moveTo(hx, hy);
+                } else {
+                    ctx.lineTo(hx, hy);
+                }
+            }
+            ctx.closePath();
+            
+            // تلوين السداسي
+            if (isSelected) {
+                ctx.fillStyle = colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.primary;
+                ctx.lineWidth = 3;
+            } else {
+                ctx.fillStyle = number % 2 === 0 ? colors.hexagon : colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.hexagonBorder;
+                ctx.lineWidth = 1;
+            }
+            ctx.stroke();
+            
+            // كتابة الرقم
+            ctx.fillStyle = colors.text;
+            
+            // تحديد حجم الخط بناءً على حجم العدد
+            let fontSize = 16;
+            if (number > 999) fontSize = 12;
+            if (number > 9999) fontSize = 10;
+            if (number > 99999) fontSize = 8;
+            
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
+            let displayNumber = number;
+            if (number > 1e6) {
+                displayNumber = number.toExponential(2);
+            }
+            
+            ctx.fillText(displayNumber, x, y);
+        }
+        
+        // رسم خلية مثلثية
+        function drawTriangleCell(x, y, size, number, row, col) {
+            const cellId = `${row}-${col}`;
+            const isSelected = state.selectedHexagons.has(cellId);
+            const isExploded = state.explodedCells.has(cellId);
+            const colors = colorSchemesMap[state.colorScheme];
+            
+            if (isExploded) return; // لا ترسم الخلايا المفككة
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + size/2, y + size);
+            ctx.lineTo(x - size/2, y + size);
+            ctx.closePath();
+            
+            // تلوين المثلث
+            if (isSelected) {
+                ctx.fillStyle = colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.primary;
+                ctx.lineWidth = 3;
+            } else {
+                ctx.fillStyle = number % 2 === 0 ? colors.hexagon : colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.hexagonBorder;
+                ctx.lineWidth = 1;
+            }
+            ctx.stroke();
+            
+            // كتابة الرقم
+            ctx.fillStyle = colors.text;
+            
+            // تحديد حجم الخط بناءً على حجم العدد
+            let fontSize = 14;
+            if (number > 999) fontSize = 10;
+            if (number > 9999) fontSize = 8;
+            if (number > 99999) fontSize = 6;
+            
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
+            let displayNumber = number;
+            if (number > 1e6) {
+                displayNumber = number.toExponential(2);
+            }
+            
+            ctx.fillText(displayNumber, x, y + size/2);
+        }
+        
+        // رسم دائرة
+        function drawCircle(x, y, radius, number, row, col) {
+            const circleId = `${row}-${col}`;
+            const isSelected = state.selectedHexagons.has(circleId);
+            const isExploded = state.explodedCells.has(circleId);
+            const colors = colorSchemesMap[state.colorScheme];
+            
+            if (isExploded) return; // لا ترسم الخلايا المفككة
+            
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.closePath();
+            
+            // تلوين الدائرة
+            if (isSelected) {
+                ctx.fillStyle = colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.primary;
+                ctx.lineWidth = 3;
+            } else {
+                ctx.fillStyle = number % 2 === 0 ? colors.hexagon : colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.hexagonBorder;
+                ctx.lineWidth = 1;
+            }
+            ctx.stroke();
+            
+            // كتابة الرقم
+            ctx.fillStyle = colors.text;
+            
+            // تحديد حجم الخط بناءً على حجم العدد
+            let fontSize = 14;
+            if (number > 999) fontSize = 10;
+            if (number > 9999) fontSize = 8;
+            if (number > 99999) fontSize = 6;
+            
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
+            let displayNumber = number;
+            if (number > 1e6) {
+                displayNumber = number.toExponential(2);
+            }
+            
+            ctx.fillText(displayNumber, x, y);
+        }
+        
+        // رسم مربع
+        function drawSquare(x, y, size, number, row, col) {
+            const squareId = `${row}-${col}`;
+            const isSelected = state.selectedHexagons.has(squareId);
+            const isExploded = state.explodedCells.has(squareId);
+            const colors = colorSchemesMap[state.colorScheme];
+            
+            if (isExploded) return; // لا ترسم الخلايا المفككة
+            
+            ctx.beginPath();
+            ctx.rect(x - size/2, y - size/2, size, size);
+            ctx.closePath();
+            
+            // تلوين المربع
+            if (isSelected) {
+                ctx.fillStyle = colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.primary;
+                ctx.lineWidth = 3;
+            } else {
+                ctx.fillStyle = number % 2 === 0 ? colors.hexagon : colors.accent;
+                ctx.fill();
+                ctx.strokeStyle = colors.hexagonBorder;
+                ctx.lineWidth = 1;
+            }
+            ctx.stroke();
+            
+            // كتابة الرقم
+            ctx.fillStyle = colors.text;
+            
+            // تحديد حجم الخط بناءً على حجم العدد
+            let fontSize = 14;
+            if (number > 999) fontSize = 10;
+            if (number > 9999) fontSize = 8;
+            if (number > 99999) fontSize = 6;
+            
+            ctx.font = `${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // إذا كان العدد كبير جداً، عرضه بشكل مختصر
+            let displayNumber = number;
+            if (number > 1e6) {
+                displayNumber = number.toExponential(2);
+            }
+            
+            ctx.fillText(displayNumber, x, y);
+        }
+        
+        // الحصول على إحداثيات الخلية من إحداثيات الماوس
+        function getCellFromMouse(x, y) {
+            // تطبيق التحويلات العكسية
+            const transformedX = (x - state.offsetX) / state.zoom;
+            const transformedY = (y - state.offsetY) / state.zoom;
+            
+            // تعويض التدوير
+            const angle = -state.rotation * Math.PI / 180;
+            const rotatedX = transformedX * Math.cos(angle) - transformedY * Math.sin(angle);
+            const rotatedY = transformedX * Math.sin(angle) + transformedY * Math.cos(angle);
+            
+            // البحث عن الخلية الأقرب
+            let minDistance = Infinity;
+            let closestCell = null;
+            
+            for (let row = 0; row < state.triangleData.length; row++) {
+                for (let col = 0; col < state.triangleData[row].length; col++) {
+                    let cellX, cellY;
+                    
+                    // حساب موقع الخلية بناءً على نمط العرض
+                    switch(state.displayStyle) {
+                        case 'hexagon':
+                            const hexSize = Math.max(20, 40 - state.layers * 0.3);
+                            const hexWidth = Math.sqrt(3) * hexSize;
+                            const hexHeight = 2 * hexSize;
+                            cellX = (col - row/2) * hexWidth;
+                            cellY = row * hexHeight * 0.75;
+                            break;
+                        case 'triangle':
+                            const cellSize = Math.max(20, 40 - state.layers * 0.3);
+                            cellX = (col - row/2) * cellSize;
+                            cellY = row * cellSize;
+                            break;
+                        case 'circle':
+                            const spacing = Math.max(25, 45 - state.layers * 0.3);
+                            cellX = (col - row/2) * spacing;
+                            cellY = row * spacing;
+                            break;
+                        case 'square':
+                            const squareSpacing = Math.max(20, 40 - state.layers * 0.3);
+                            cellX = (col - row/2) * squareSpacing;
+                            cellY = row * squareSpacing;
+                            break;
+                    }
+                    
+                    const distance = Math.sqrt((rotatedX - cellX) ** 2 + (rotatedY - cellY) ** 2);
+                    const threshold = state.displayStyle === 'hexagon' ? 40 : 30;
+                    
+                    if (distance < threshold && distance < minDistance) {
+                        minDistance = distance;
+                        closestCell = { row, col };
+                    }
+                }
+            }
+            
+            return closestCell;
+        }
+        
+        // تفكيك المثلث (إزالة الخلية المحددة وإضافتها للوحة الشرح)
+        function explodeTriangle(row, col) {
+            const cellId = `${row}-${col}`;
+            
+            // إذا كانت الخلية مفككة بالفعل، لا تفعل شيئاً
+            if (state.explodedCells.has(cellId)) return;
+            
+            // حفظ الحالة الحالية في التاريخ
+            state.history.push({
+                selectedHexagons: new Set(state.selectedHexagons),
+                explodedCells: new Map(state.explodedCells)
+            });
+            undoButton.disabled = false;
+            
+            // إضافة الخلية المحددة إلى المجموعة المحددة
+            state.selectedHexagons.add(cellId);
+            
+            // إضافة الخلية إلى الخلايا المفككة مع شرحها
+            const number = state.triangleData[row][col];
+            const explanation = generateNumberExplanation(number, row, col);
+            state.explodedCells.set(cellId, {
+                number,
+                row,
+                col,
+                explanation
+            });
+            
+            drawPascalTriangle();
+            updateExplodedPanel();
+            updateStatusBar(`تم تفكيك الخلية عند الصف ${row+1}, العمود ${col+1}`);
+        }
+        
+        // توليد شرح للرقم
+        function generateNumberExplanation(number, row, col) {
+            let explanation = "";
+            
+            // شرح بناءً على قيمة الرقم
+            if (number === 1) {
+                explanation = "العدد 1: هو أساس المتتالية، ويمثل بداية كل صف ونهاية كل صف في المثلث.";
+            } else if (number === 2) {
+                explanation = "العدد 2: أول عدد غير أولي في المثلث، ويمثل مجموع 1+1.";
+            } else if (isPrime(number)) {
+                explanation = `العدد ${number}: هو عدد أولي، لا يقبل القسمة إلا على نفسه والواحد.`;
+            } else {
+                explanation = `العدد ${number}: هو عدد مركب، يمكن تحليله إلى عوامل أولية.`;
+            }
+            
+            // إضافة معلومات عن الموقع
+            explanation += ` يقع هذا العدد في الصف ${row+1}, العمود ${col+1} من المثلث.`;
+            
+            // إضافة معلومات عن كيفية تكوينه
+            if (row > 0 && col > 0 && col < row) {
+                const leftParent = state.triangleData[row-1][col-1];
+                const rightParent = state.triangleData[row-1][col];
+                explanation += ` يتكون من جمع العددين أعلاه: ${leftParent} + ${rightParent} = ${number}.`;
+            }
+            
+            // إضافة معلومات خاصة بالأعداد المميزة
+            if (number === row) {
+                explanation += " هذا العدد يمثل عدداً مثلثياً.";
+            }
+            
+            if (number === Math.pow(2, row)) {
+                explanation += " هذا العدد يمثل مجموع الصف.";
+            }
+            
+            // إضافة معلومات عن علاقته بمتسلسلة فيبوناتشي
+            const fibInfo = getFibonacciInfo(number, row, col);
+            if (fibInfo) {
+                explanation += " " + fibInfo;
+            }
+            
+            return explanation;
+        }
+        
+        // الحصول على معلومات عن علاقة العدد بمتسلسلة فيبوناتشي
+        function getFibonacciInfo(number, row, col) {
+            // توليد متسلسلة فيبوناتشي حتى العدد 111
+            let fib = [0, 1];
+            for (let i = 2; fib[i-1] <= 111; i++) {
+                fib[i] = fib[i-1] + fib[i-2];
+            }
+            
+            // التحقق إذا كان العدد جزءاً من متسلسلة فيبوناتشي
+            if (fib.includes(number)) {
+                const index = fib.indexOf(number);
+                return `هذا العدد هو العدد رقم ${index} في متسلسلة فيبوناتشي.`;
+            }
+            
+            return null;
+        }
+        
+        // التحقق إذا كان العدد أولياً
+        function isPrime(num) {
+            if (num <= 1) return false;
+            if (num <= 3) return true;
+            if (num % 2 === 0 || num % 3 === 0) return false;
+            
+            let i = 5;
+            while (i * i <= num) {
+                if (num % i === 0 || num % (i + 2) === 0) return false;
+                i += 6;
+            }
+            return true;
+        }
+        
+        // تحديث لوحة الخلايا المفككة
+        function updateExplodedPanel() {
+            explodedContainer.innerHTML = '';
+            
+            if (state.explodedCells.size === 0) {
+                explodedContainer.innerHTML = '<p>لا توجد خلايا مفككة. اضغط Ctrl + زر الماوس الأيسر على أي خلية لتفكيكها.</p>';
+                return;
+            }
+            
+            state.explodedCells.forEach((cell, cellId) => {
+                const explodedItem = document.createElement('div');
+                explodedItem.className = 'exploded-item';
+                explodedItem.id = `exploded-${cellId}`;
+                
+                const title = document.createElement('div');
+                title.className = 'exploded-title';
+                
+                const numberSpan = document.createElement('span');
+                numberSpan.className = 'exploded-number';
+                numberSpan.textContent = `العدد: ${cell.number}`;
+                
+                const locationSpan = document.createElement('span');
+                locationSpan.textContent = `(الصف: ${cell.row+1}, العمود: ${cell.col+1})`;
+                
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '×';
+                closeBtn.onclick = () => removeExplodedCell(cellId);
+                
+                title.appendChild(numberSpan);
+                title.appendChild(locationSpan);
+                title.appendChild(closeBtn);
+                
+                const content = document.createElement('div');
+                content.className = 'exploded-content';
+                content.textContent = cell.explanation;
+                
+                explodedItem.appendChild(title);
+                explodedItem.appendChild(content);
+                explodedContainer.appendChild(explodedItem);
+            });
+        }
+        
+        // إزالة خلية من الخلايا المفككة
+        function removeExplodedCell(cellId) {
+            state.explodedCells.delete(cellId);
+            state.selectedHexagons.delete(cellId);
+            drawPascalTriangle();
+            updateExplodedPanel();
+        }
+        
+        // التراجع عن آخر عملية تفكيك
+        function undoExplosion() {
+            if (state.history.length > 0) {
+                const previousState = state.history.pop();
+                state.selectedHexagons = previousState.selectedHexagons;
+                state.explodedCells = previousState.explodedCells;
+                drawPascalTriangle();
+                updateExplodedPanel();
+                updateStatusBar("تم التراجع عن آخر عملية تفكيك");
+                
+                if (state.history.length === 0) {
+                    undoButton.disabled = true;
+                }
+            }
+        }
+        
+        // حساب المعادلات المستخرجة من المثلث
+        function calculateFormulas() {
+            const formulas = [];
+            const triangle = state.triangleData;
+            
+            // مجموع الصفوف
+            for (let i = 0; i < triangle.length; i++) {
+                const rowSum = triangle[i].reduce((a, b) => a + b, 0);
+                formulas.push({
+                    title: `مجموع الصف ${i+1}`,
+                    content: `${triangle[i].join(' + ')} = ${rowSum} = 2^${i}`
+                });
+            }
+            
+            // أعداد فيبوناتشي
+            if (triangle.length >= 5) {
+                let fibSequence = [1, 1];
+                for (let i = 2; i < triangle.length; i++) {
+                    fibSequence.push(fibSequence[i-1] + fibSequence[i-2]);
+                }
+                formulas.push({
+                    title: 'متتالية فيبوناتشي',
+                    content: fibSequence.join(', ')
+                });
+            }
+            
+            // معاملات ذات الحدين
+            if (triangle.length >= 4) {
+                const n = triangle.length - 1;
+                formulas.push({
+                    title: `معاملات (a+b)^${n}`,
+                    content: triangle[n].join(', ')
+                });
+            }
+            
+            // أعداد مثلثية
+            const triangularNumbers = [];
+            for (let i = 1; i <= Math.min(5, triangle.length); i++) {
+                triangularNumbers.push(triangle[i][1]);
+            }
+            formulas.push({
+                title: 'الأعداد المثلثية',
+                content: triangularNumbers.join(', ')
+            });
+            
+            // أعداد مربعة
+            const squareNumbers = [];
+            for (let i = 0; i < Math.min(5, triangle.length); i++) {
+                squareNumbers.push(triangle[i][i] ** 2);
+            }
+            formulas.push({
+                title: 'الأعداد المربعة',
+                content: squareNumbers.join(', ')
+            });
+            
+            // عرض المعادلات
+            displayFormulas(formulas, formulasContainer);
+            
+            // تحديث خصائص المثلث
+            updateTriangleProperties();
+            
+            // حساب معادلات العلماء
+            calculateScientistsFormulas();
+        }
+        
+        // حساب معادلات العلماء
+        function calculateScientistsFormulas() {
+            const formulas = [];
+            const triangle = state.triangleData;
+            
+            // نظرية فيثاغورس في المثلث
+            if (triangle.length >= 3) {
+                formulas.push({
+                    title: 'نظرية فيثاغورس العددية',
+                    content: `3² + 4² = 5² → ${triangle[2][1]}² + ${triangle[3][1]}² = ${triangle[4][2]}²`
+                });
+            }
+            
+            // متطابقة أويلر
+            formulas.push({
+                title: 'متطابقة أويلر',
+                content: 'e^(iπ) + 1 = 0 → العلاقة بين الأعداد الأساسية'
+            });
+            
+            // قانون نيوتن للجاذبية في الأعداد
+            if (triangle.length >= 5) {
+                formulas.push({
+                    title: 'تشابه نيوتن',
+                    content: `F = G(m₁m₂/r²) → ${triangle[4][0]}×${triangle[4][2]} = ${triangle[4][0] * triangle[4][2]}`
+                });
+            }
+            
+            // تسلسل فيبوناتشي الذهبي
+            if (triangle.length >= 7) {
+                const goldenRatio = (1 + Math.sqrt(5)) / 2;
+                formulas.push({
+                    title: 'النسبة الذهبية (فيبوناتشي)',
+                    content: `φ ≈ ${goldenRatio.toFixed(4)} → ${triangle[5][2]}/${triangle[4][2]} = ${(triangle[5][2]/triangle[4][2]).toFixed(4)}`
+                });
+            }
+            
+            // قانون احتمالات باسكال
+            if (triangle.length >= 4) {
+                formulas.push({
+                    title: 'قانون باسكال للاحتمالات',
+                    content: `P = n!/(k!(n-k)!) → ${triangle[3][1]} = 3!/(1!2!)`
+                });
+            }
+            
+            // معادلة أرخميدس للدوائر
+            formulas.push({
+                title: 'تقريب أرخميدس للدائرة',
+                content: 'π ≈ 22/7 = 3.142857 → العلاقة بين المحيط والقطر'
+            });
+            
+            // عرض معادلات العلماء
+            displayFormulas(formulas, scientistsFormulasContainer);
+        }
+        
+        // عرض المعادلات في الواجهة
+        function displayFormulas(formulas, container) {
+            container.innerHTML = '';
+            
+            formulas.forEach(formula => {
+                const formulaCard = document.createElement('div');
+                formulaCard.className = 'formula-card';
+                
+                const title = document.createElement('div');
+                title.className = 'formula-title';
+                title.textContent = formula.title;
+                
+                const content = document.createElement('div');
+                content.className = 'formula-content';
+                content.textContent = formula.content;
+                
+                formulaCard.appendChild(title);
+                formulaCard.appendChild(content);
+                container.appendChild(formulaCard);
+            });
+        }
+        
+        // تحديث خصائص المثلث المعروضة
+        function updateTriangleProperties() {
+            const triangle = state.triangleData;
+            const totalNumbers = triangle.flat().length;
+            const maxNumber = Math.max(...triangle.flat());
+            const sumAllNumbers = triangle.flat().reduce((a, b) => a + b, 0);
+            
+            triangleProperties.innerHTML = `
+                <p>عدد الطبقات: ${state.layers}</p>
+                <p>إجمالي الأعداد: ${totalNumbers}</p>
+                <p>أكبر عدد: ${maxNumber}</p>
+                <p>مجموع جميع الأعداد: ${sumAllNumbers}</p>
+                <p>درجة التدوير: ${state.rotation}°</p>
+                <p>مستوى التكبير: ${state.zoom.toFixed(1)}</p>
+                <p>الخلايا المحددة: ${state.selectedHexagons.size}</p>
+                <p>الخلايا المفككة: ${state.explodedCells.size}</p>
+            `;
+        }
+        
+        // تحديث شريط الحالة
+        function updateStatusBar(message) {
+            statusBar.textContent = message;
+        }
+        
+        // تطبيق نظام الألوان
+        function applyColorScheme(scheme) {
+            state.colorScheme = scheme;
+            const colors = colorSchemesMap[scheme];
+            
+            document.documentElement.style.setProperty('--primary-color', colors.primary);
+            document.documentElement.style.setProperty('--secondary-color', colors.secondary);
+            document.documentElement.style.setProperty('--accent-color', colors.accent);
+            document.documentElement.style.setProperty('--text-color', colors.text);
+            document.documentElement.style.setProperty('--background-color', colors.background);
+            
+            drawPascalTriangle();
+        }
+        
+        // إضافة مستمعي الأحداث
+        function setupEventListeners() {
+            // تحديث القيم عند تحريك المنزلقات
+            layersSlider.addEventListener('input', function() {
+                state.layers = parseInt(this.value);
+                layersValue.textContent = state.layers;
+                drawPascalTriangle();
+            });
+            
+            rotationSlider.addEventListener('input', function() {
+                state.rotation = parseInt(this.value);
+                rotationValue.textContent = state.rotation;
+                drawPascalTriangle();
+            });
+            
+            zoomSlider.addEventListener('input', function() {
+                state.zoom = parseFloat(this.value);
+                zoomValue.textContent = state.zoom.toFixed(1);
+                drawPascalTriangle();
+            });
+            
+            // إعادة ضبط العرض
+            resetButton.addEventListener('click', function() {
+                state.rotation = 0;
+                state.zoom = 1.0;
+                state.offsetX = canvas.parentElement.clientWidth / 2;
+                state.offsetY = canvas.parentElement.clientHeight / 2;
+                
+                rotationSlider.value = state.rotation;
+                rotationValue.textContent = state.rotation;
+                zoomSlider.value = state.zoom;
+                zoomValue.textContent = state.zoom.toFixed(1);
+                
+                drawPascalTriangle();
+                updateStatusBar("تم إعادة ضبط العرض");
+            });
+            
+            // إعادة تعيين المثلث
+            resetTriangleButton.addEventListener('click', function() {
+                state.selectedHexagons.clear();
+                state.explodedCells.clear();
+                state.history = [];
+                undoButton.disabled = true;
+                drawPascalTriangle();
+                updateExplodedPanel();
+                updateStatusBar("تم إعادة تعيين المثلث");
+            });
+            
+            // حساب المعادلات
+            calculateButton.addEventListener('click', calculateFormulas);
+            
+            // التراجع
+            undoButton.addEventListener('click', undoExplosion);
+            
+            // التبويبات
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // إزالة النشاط من جميع التبويبات
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // إضافة النشاط للتبويب المحدد
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // أنماط العرض
+            displayStyles.forEach(style => {
+                style.addEventListener('click', function() {
+                    displayStyles.forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    state.displayStyle = this.getAttribute('data-style');
+                    drawPascalTriangle();
+                    updateStatusBar(`تم تغيير نمط العرض إلى: ${this.textContent}`);
+                });
+            });
+            
+            // أنظمة الألوان
+            colorSchemes.forEach(scheme => {
+                scheme.addEventListener('click', function() {
+                    colorSchemes.forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    applyColorScheme(this.getAttribute('data-scheme'));
+                    updateStatusBar(`تم تغيير نظام الألوان`);
+                });
+            });
+            
+            // تفاعل السحب للتحريك
+            canvas.addEventListener('mousedown', function(e) {
+                if (e.button === 0 && !state.ctrlPressed) { // زر الماوس الأيسر بدون Ctrl
+                    state.isDragging = true;
+                    state.lastX = e.clientX;
+                    state.lastY = e.clientY;
+                    updateStatusBar("جارٍ تحريك العرض - اسحب لتحريك المثلث");
+                }
+            });
+            
+            canvas.addEventListener('mousemove', function(e) {
+                if (state.isDragging) {
+                    const deltaX = e.clientX - state.lastX;
+                    const deltaY = e.clientY - state.lastY;
+                    
+                    state.offsetX += deltaX;
+                    state.offsetY += deltaY;
+                    
+                    state.lastX = e.clientX;
+                    state.lastY = e.clientY;
+                    
+                    drawPascalTriangle();
+                }
+            });
+            
+            canvas.addEventListener('mouseup', function(e) {
+                if (e.button === 0) {
+                    state.isDragging = false;
+                }
+            });
+            
+            canvas.addEventListener('mouseleave', function() {
+                state.isDragging = false;
+            });
+            
+            // النقر لتفكيك المثلث (Ctrl + زر الماوس الأيسر)
+            canvas.addEventListener('click', function(e) {
+                if (state.ctrlPressed) {
+                    const rect = canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const cell = getCellFromMouse(x, y);
+                    if (cell) {
+                        explodeTriangle(cell.row, cell.col);
+                    }
+                }
+            });
+            
+            // التراجع بزر الماوس الأيمن
+            canvas.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                undoExplosion();
+            });
+            
+            // التكبير والتصغير بعجلة الماوس
+            canvas.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                
+                const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+                state.zoom *= zoomFactor;
+                
+                // تحديد الحدود الدنيا والقصوى للتكبير
+                state.zoom = Math.max(0.1, Math.min(3, state.zoom));
+                
+                zoomSlider.value = state.zoom;
+                zoomValue.textContent = state.zoom.toFixed(1);
+                
+                drawPascalTriangle();
+            });
+            
+            // اكتشاف ضغط مفتاح Ctrl
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Control') {
+                    state.ctrlPressed = true;
+                    updateStatusBar("وضع التفكيك نشط - انقر على أي مثلث لتفكيكه");
+                }
+            });
+            
+            document.addEventListener('keyup', function(e) {
+                if (e.key === 'Control') {
+                    state.ctrlPressed = false;
+                    updateStatusBar("جاهز - اضغط Ctrl + زر الماوس الأيسر لتفكيك المثلثات");
+                }
+            });
+            
+            // إعادة ضبط حجم Canvas عند تغيير حجم النافذة
+            window.addEventListener('resize', initCanvas);
+        }
+        
+        // تهيئة التطبيق
+        function init() {
+            initCanvas();
+            setupEventListeners();
+            calculateFormulas(); // حساب المعادلات الأولية
+            updateExplodedPanel(); // تحديث لوحة الخلايا المفككة
+        }
+        
+        // بدء التطبيق
+        init();
+    </script>
+</body>
+</html>
